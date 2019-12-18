@@ -5,6 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { EagerModule } from './eager/eager.module';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(
+    http
+  );
+}
+
 
 @NgModule({
   declarations: [
@@ -14,7 +24,14 @@ import { EagerModule } from './eager/eager.module';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    EagerModule
+    EagerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

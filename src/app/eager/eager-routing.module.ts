@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EagerComponent } from './eager.component';
+import { EagerComponent } from './components/eager.component';
 
 
 const routes: Routes = [

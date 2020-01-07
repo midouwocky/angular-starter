@@ -12,8 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'comp',
-    component: ContentCompComponent,
-    canActivate: [AuthGuard]
+    component: ContentCompComponent
   }
 ];
 

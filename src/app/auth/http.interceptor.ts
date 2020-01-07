@@ -21,7 +21,7 @@ export class LoginInterceptor implements HttpInterceptor {
             try {
                 decoded = jwt_decode(token);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
             if (decoded) {
                 const dateExp = new Date(0);

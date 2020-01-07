@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  endpoints: {
+    loginUrl: 'http://www.mocky.io/v2/5e13385d3100005100d47693',
+    profile: 'http://www.mocky.io/v2/5e1336383100005a8ad4768c'
+  }
 };
 
 /*

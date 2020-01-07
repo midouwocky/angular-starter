@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   title = 'test-ahmed';
   ready = false;
-  constructor(translate: TranslateService) {
+  constructor(
+    translate: TranslateService,
+    private authService: AuthService
+    ) {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');
@@ -22,5 +26,9 @@ export class AppComponent {
     translate.use('en').subscribe(res => {
       this.ready = true;
     });
+  }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 }

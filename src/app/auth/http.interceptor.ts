@@ -17,26 +17,29 @@ export class LoginInterceptor implements HttpInterceptor {
         const token = StorageUtils.getAuthToken();
 
         if (token) {
-            const decoded = jwt_decode(token);
-
-            const dateExp = new Date(0);
-            dateExp.setUTCSeconds(decoded.exp);
-            // return date;
-
-
-            if (!(dateExp.valueOf() > new Date().valueOf())) {
-                // token expired , Action : Logout
-                this.authService.logout();
-            } else {
-                // token not expired yet , Action : send the new header
-                request = request.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            let decoded = null;
+            try {
+                decoded = jwt_decode(token);
+            } catch (error) {
+                console.log(error);
+            }
+            if (decoded) {
+                const dateExp = new Date(0);
+                dateExp.setUTCSeconds(decoded.exp);
+                // return date;
+                if (!(dateExp.valueOf() > new Date().valueOf())) {
+                    // token expired , Action : Logout
+                    this.authService.logout();
+                } else {
+                    // token not expired yet , Action : send the new header
+                    request = request.clone({
+                        setHeaders: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                }
             }
         }
-
         return next.handle(request);
     }
 }

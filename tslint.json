@@ -93,7 +93,10 @@
       true,
       "kebab-case"
     ],
-    "max-file-line-count": [true, 500]
+    "max-file-line-count": [
+      true,
+      500
+    ]
   },
   "rulesDirectory": [
     "codelyzer"

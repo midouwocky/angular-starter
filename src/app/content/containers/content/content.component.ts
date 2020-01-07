@@ -11,23 +11,9 @@ import { StorageUtils } from 'src/app/shared/storage-utils';
 export class ContentComponent implements OnInit {
 
   constructor(
-    private authService: AuthService
   ) { }
 
   ngOnInit() {
   }
 
-  login() {
-    const credentials: Credentials = {
-      username: 'test',
-      password: 'test'
-    };
-
-    this.authService.login(credentials).subscribe(res => {
-      this.authService.setAuthenticated(true);
-      StorageUtils.setAuthToken(res.access_token);
-    }, err => {
-      this.authService.setAuthenticated(false);
-    });
-  }
 }

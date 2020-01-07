@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           return !!res;
         }));
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
       return false;
     }
   }
@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           return !!res;
         }));
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
       return false;
     }
   }

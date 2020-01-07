@@ -5,6 +5,8 @@ import { AuthService } from './auth.service';
 import { map, onErrorResumeNext, catchError } from 'rxjs/operators';
 import { StorageUtils } from '../shared/storage-utils';
 import { LoginComponent } from '../login/containers/login/login.component';
+import { User } from '../shared/models/user.model';
+import * as jwt_decode from 'jwt-decode'
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authenticatedConditions();
+    const roles = next.data && next.data.roles ? next.data.roles : undefined;
+    return this.authenticatedConditions(roles);
   }
 
   canActivateChild(
@@ -29,13 +32,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (childRoute.component === LoginComponent) {
       return this.notAuthenticatedConditions();
     } else {
-      return this.authenticatedConditions();
+      const roles = childRoute.data && childRoute.data.roles ? childRoute.data.roles : undefined;
+      return this.authenticatedConditions(roles);
     }
   }
 
-  authenticatedConditions(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  authenticatedConditions(roles: string[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     if (this.authService.isAuthenticated()) {
-      return true;
+      return this.checkRoles(roles);
     }
     const token = StorageUtils.getAuthToken();
     if (token) {
@@ -43,9 +47,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         .pipe(map(res => {
           // is logged in so can access the component
           this.authService.setAuthenticated(true);
-          return !!res;
+          StorageUtils.setUser(res);
+          // check if user has roles to access route
+          return this.checkRoles(roles);
         }), catchError((error) => {
           StorageUtils.removeAuthToken();
+          StorageUtils.removeUser();
           this.router.navigate(['login']);
           return of(false);
         }));
@@ -74,6 +81,22 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         }), catchError((error) => {
           return of(true);
         }));
+    } else {
+      return true;
+    }
+  }
+
+  checkRoles(roles: string[]): boolean {
+    if (roles && roles.length > 0) {
+      let hasAccess = false;
+      const token = StorageUtils.getAuthToken();
+      const jwtDecoded = jwt_decode(token);
+      jwtDecoded.roles.forEach(userRole => {
+        if (roles.includes(userRole)) {
+          hasAccess = true;
+        }
+      });
+      return hasAccess;
     } else {
       return true;
     }

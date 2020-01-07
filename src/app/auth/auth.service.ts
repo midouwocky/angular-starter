@@ -4,6 +4,7 @@ import { Credentials } from '../shared/models/credentials.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { User } from '../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class AuthService {
     return this.http.post(environment.endpoints.loginUrl, credentials);
   }
 
-  checkAuthentication(): Observable<any> {
-    return this.http.get(environment.endpoints.profile);
+  checkAuthentication(): Observable<User> {
+    return this.http.get<User>(environment.endpoints.profile);
   }
 
   /**
@@ -40,6 +41,7 @@ export class AuthService {
 
   logout() {
     StorageUtils.removeAuthToken();
+    StorageUtils.removeUser();
     this.setAuthenticated(false);
   }
 }

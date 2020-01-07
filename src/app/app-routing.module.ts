@@ -11,7 +11,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './content/content.module#ContentModule',
-    canActivateChild: [AuthGuard]
+    canActivateChild: [AuthGuard],
+    data: {
+      roles: ['admin']
+    }
   },
   {
     path: 'login',

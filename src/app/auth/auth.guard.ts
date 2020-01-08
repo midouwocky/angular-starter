@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateChild, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
-import { map, onErrorResumeNext, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { StorageUtils } from '../shared/storage-utils';
 import { LoginComponent } from '../login/containers/login/login.component';
-import { User } from '../shared/models/user.model';
-import * as jwt_decode from 'jwt-decode'
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +88,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   checkRoles(roles: string[]): boolean {
     if (roles && roles.length > 0) {
       let hasAccess = false;
+
+      // get the roles from the jwt and check if user has the right roles
       const token = StorageUtils.getAuthToken();
       const jwtDecoded = jwt_decode(token);
       jwtDecoded.roles.forEach(userRole => {

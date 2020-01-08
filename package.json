@@ -54,8 +54,16 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.4.3"
   },
-  "hooks": {
-    "pre-commit": "pretty-quick --staged && ng lint",
-    "pre-push": "ng build --aot true"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint",
+      "pre-push": "ng build --aot true"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "ng lint --fix",
+      "git add"
+    ]
   }
 }

@@ -34,18 +34,20 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const credentials: Credentials = {
-      username: 'test',
-      password: 'test'
-    };
+    if (this.loginForm.valid) {
+      const credentials: Credentials = {
+        username: this.usernameControl.value,
+        password: this.passwordControl.value
+      };
 
-    this.authService.login(credentials).subscribe(res => {
-      this.authService.setAuthenticated(true);
-      StorageUtils.setAuthToken(res.access_token);
-      this.router.navigate(['']);
-    }, err => {
-      this.authService.setAuthenticated(false);
-    });
+      this.authService.login(credentials).subscribe(res => {
+        this.authService.setAuthenticated(true);
+        StorageUtils.setAuthToken(res.access_token);
+        this.router.navigate(['']);
+      }, err => {
+        this.authService.setAuthenticated(false);
+      });
+    }
   }
 
 }

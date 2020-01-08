@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateChild, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { map, catchError } from 'rxjs/operators';
 import { StorageUtils } from '../shared/storage-utils';
+import { LoginComponent } from '../login/containers/login/login.component';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -18,38 +20,86 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isAuthenticated()) {
-      return true;
-    }
-    const token = StorageUtils.getAuthToken();
-    if (token) {
-      return this.authService.checkAuthentication()
-        .pipe(map(res => {
-          this.authService.setAuthenticated(true);
-          return !!res;
-        }));
-    } else {
-      this.router.navigate(['']);
-      return false;
-    }
+    const roles = next.data && next.data.roles ? next.data.roles : undefined;
+    return this.authenticatedConditions(roles);
   }
 
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+
+    if (childRoute.component === LoginComponent) {
+      return this.notAuthenticatedConditions();
+    } else {
+      const roles = childRoute.data && childRoute.data.roles ? childRoute.data.roles : undefined;
+      return this.authenticatedConditions(roles);
+    }
+  }
+
+  authenticatedConditions(roles: string[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     if (this.authService.isAuthenticated()) {
-      return true;
+      return this.checkRoles(roles);
     }
     const token = StorageUtils.getAuthToken();
     if (token) {
       return this.authService.checkAuthentication()
         .pipe(map(res => {
+          // is logged in so can access the component
           this.authService.setAuthenticated(true);
-          return !!res;
+          StorageUtils.setUser(res);
+          // check if user has roles to access route
+          return this.checkRoles(roles);
+        }), catchError((error) => {
+          StorageUtils.removeAuthToken();
+          StorageUtils.removeUser();
+          this.router.navigate(['login']);
+          return of(false);
         }));
     } else {
+      this.router.navigate(['login']);
+      return false;
+    }
+  }
+
+  notAuthenticatedConditions(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    if (this.authService.isAuthenticated()) {
       this.router.navigate(['']);
       return false;
+    }
+    const token = StorageUtils.getAuthToken();
+    if (token) {
+      return this.authService.checkAuthentication()
+        .pipe(map(res => {
+
+          // is logged in so can't access the component
+          this.authService.setAuthenticated(true);
+
+          // redirect to home
+          this.router.navigate(['']);
+          return false;
+        }), catchError((error) => {
+          return of(true);
+        }));
+    } else {
+      return true;
+    }
+  }
+
+  checkRoles(roles: string[]): boolean {
+    if (roles && roles.length > 0) {
+      let hasAccess = false;
+
+      // get the roles from the jwt and check if user has the right roles
+      const token = StorageUtils.getAuthToken();
+      const jwtDecoded = jwt_decode(token);
+      jwtDecoded.roles.forEach(userRole => {
+        if (roles.includes(userRole)) {
+          hasAccess = true;
+        }
+      });
+      return hasAccess;
+    } else {
+      return true;
     }
   }
 }

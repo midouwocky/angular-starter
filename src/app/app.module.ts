@@ -8,7 +8,7 @@ import { EagerModule } from './eager/eager.module';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { LoginInterceptor } from './auth/http.interceptor';
+import { AuthInterceptor } from './auth/http.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(
@@ -37,7 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoginInterceptor,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

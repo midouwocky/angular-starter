@@ -1,3 +1,5 @@
+import { User } from './models/user.model';
+
 export class StorageUtils {
     static setItem(item: any) {
         localStorage.setItem('item-name', JSON.stringify(item));
@@ -31,5 +33,22 @@ export class StorageUtils {
 
     static removeAuthToken() {
         localStorage.removeItem('access_token');
+    }
+
+    static setUser(item: User) {
+        localStorage.setItem('user', JSON.stringify(item));
+    }
+
+    static getUser(): User {
+        const itemString = localStorage.getItem('user');
+        if (itemString) {
+            return JSON.parse(itemString);
+        } else {
+            return null;
+        }
+    }
+
+    static removeUser() {
+        localStorage.removeItem('user');
     }
 }

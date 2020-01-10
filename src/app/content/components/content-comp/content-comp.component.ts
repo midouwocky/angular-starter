@@ -15,7 +15,9 @@ import { RealTimeService } from 'src/app/shared/services/real-time.service';
 export class ContentCompComponent implements OnInit {
   constructor(private realTimeService: RealTimeService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  connect() {
     this.realTimeService.connect();
   }
 }

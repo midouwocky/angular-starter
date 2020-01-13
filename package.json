@@ -60,13 +60,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && ng lint",
+      "pre-commit": "pretty-quick --staged && lint-staged",
       "pre-push": "ng build --prod"
     }
   },
   "lint-staged": {
-    "src/**/*.ts": [
-      "ng lint --fix",
+    "src/**/*.{ts,tsx}": [
+      "tslint --fix",
       "git add"
     ]
   }

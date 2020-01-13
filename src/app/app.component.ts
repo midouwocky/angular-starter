@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title = 'angular-starter';
   ready = false;
-  constructor(translate: TranslateService, private authService: AuthService) {
+  constructor(
+    translate: TranslateService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');
@@ -27,5 +32,10 @@ export class AppComponent {
 
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 }

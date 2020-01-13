@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EagerComponent } from './components/eager.component';
+import { LoginComponent } from './containers/login/login.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 
 const routes: Routes = [
   {
-    path: 'eager',
-    component: EagerComponent
-    // canActivate: [AuthGuard]
+    path: '',
+    component: LoginComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EagerRoutingModule { }
+export class LoginRoutingModule { }

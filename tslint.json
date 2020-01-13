@@ -62,7 +62,12 @@
     "use-pipe-transform-interface": true,
     "file-name-casing": [true, "kebab-case"],
     "max-file-line-count": [true, 500],
-    "semicolon": [true, "always"]
+    "semicolon": [true, "always"],
+    "only-arrow-functions": [
+      true,
+      "allow-declarations",
+      "allow-named-functions"
+    ]
   },
   "rulesDirectory": ["codelyzer"]
 }

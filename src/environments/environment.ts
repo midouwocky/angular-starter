@@ -6,9 +6,11 @@ export const environment = {
   production: false,
   endpoints: {
     // loginUrl: 'http://www.mocky.io/v2/5e149ac62d00004b00167231',
-    loginUrl: 'http://www.mocky.io/v2/5e1499de2d000003a4167229',
-    profile: 'http://www.mocky.io/v2/5e1336383100005a8ad4768c'
-  }
+    loginUrl: 'http://www.mocky.io/v2/5e172e313000003478d5642e',
+    profile: 'http://www.mocky.io/v2/5e1336383100005a8ad4768c',
+    realTimeUrl: 'http://192.168.1.37:8080/angage/websocket-display',
+    realTimeChannel: '/topic/display-CH4E',
+  },
 };
 
 /*

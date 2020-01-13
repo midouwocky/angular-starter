@@ -19,7 +19,6 @@ export class AppComponent {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');
-
     const browserLang = translate.getBrowserLang();
     // use default browser language
     // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');

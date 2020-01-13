@@ -5,19 +5,16 @@ import { AuthService } from './auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'test-ahmed';
   ready = false;
-  constructor(
-    translate: TranslateService,
-    private authService: AuthService
-    ) {
+  constructor(translate: TranslateService, private authService: AuthService) {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');
-
+    const r = 5;
     const browserLang = translate.getBrowserLang();
     // use default browser language
     // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');

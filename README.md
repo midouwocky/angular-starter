@@ -1,4 +1,4 @@
-# TestAhmed
+# Angular Starter
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
@@ -14,14 +14,30 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Build docker prod image
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `docker build -t {app-name}:{tag} .` to build the project and create the docker image for it. You can run the projuct by running
+`docker run -it -p {output-port}:80 --rm {app-name}:{tag}`.
 
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Authentication
+
+JWT authentication is required to access some routes (/content/\*\*), change the mocked Urls in envirenment file to use it with your authentication API.
+JWT token is sent if existed with every http request as a Bearer token header.
+Use canActivate or canActivateChild with AuthGuard class to apply a security check on the route before access this last one.
+
+## Internationalization
+
+Using ngx-translate, see documentation (https://github.com/ngx-translate/core)
+
+## Code quality
+
+Code quality analysation using TsLint, Prettier, Pretty-quick and Husky to launch a code verification and lint correction before each commit, also a production build before push, find documentation for each liberary below :
+
+- Tslint : https://github.com/palantir/tslint
+- Prettier : https://github.com/prettier/prettier
+- Pretty-quick : https://github.com/azz/pretty-quick
+- Husky : https://github.com/typicode/husky

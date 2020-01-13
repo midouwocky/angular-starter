@@ -1,5 +1,5 @@
-<div>
-  user logged : {{isAuthenticated()}}
-</div>
+<div>user logged : {{ isAuthenticated() }}</div>
+
+<button *ngIf="isAuthenticated()" (click)="logout()">Logout</button>
 
 <router-outlet *ngIf="ready"></router-outlet>

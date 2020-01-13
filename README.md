@@ -1,4 +1,4 @@
-# TestAhmed
+# Angular Starter
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
@@ -13,6 +13,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Build docker prod image
+
+Run `docker build -t {app-name}:{tag} .` to build the project and create the docker image for it. You can run the projuct by running
+`docker run -it -p {output-port}:80 --rm {app-name}:{tag}`.
 
 ## Running unit tests
 

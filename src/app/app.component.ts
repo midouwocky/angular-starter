@@ -5,15 +5,12 @@ import { AuthService } from './auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'test-ahmed';
+  title = 'angular-starter';
   ready = false;
-  constructor(
-    translate: TranslateService,
-    private authService: AuthService
-    ) {
+  constructor(translate: TranslateService, private authService: AuthService) {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');

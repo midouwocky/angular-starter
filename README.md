@@ -35,9 +35,10 @@ Using ngx-translate, see documentation (https://github.com/ngx-translate/core)
 
 ## Code quality
 
-Code quality analysation using TsLint, Prettier, Pretty-quick and Husky to launch a code verification and lint correction before each commit, also a production build before push, find documentation for each liberary below :
+Code quality analysation using TsLint, lint-staged, Prettier, Pretty-quick and Husky to launch a code verification and lint correction before each commit, also a production build before push, find documentation for each liberary below :
 
 - Tslint : https://github.com/palantir/tslint
+- Lint-staged : https://github.com/okonet/lint-staged
 - Prettier : https://github.com/prettier/prettier
 - Pretty-quick : https://github.com/azz/pretty-quick
 - Husky : https://github.com/typicode/husky

@@ -62,7 +62,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && lint-staged",
-      "pre-push": "if (git-branch-is master || git-branch-is develop || git-branch-is -r release/* ); then ng build --prod; fi"
+      "pre-push": "if (git-branch-is master || git-branch-is develop || git-branch-is -i -r ^release/ ); then ng build --prod; fi"
     }
   },
   "lint-staged": {

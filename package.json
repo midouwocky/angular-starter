@@ -23,6 +23,7 @@
     "@angular/router": "~8.1.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "git-branch-is": "^3.1.0",
     "jwt-decode": "^2.2.0",
     "net": "^1.0.2",
     "ngx-cookie-service": "^2.3.0",
@@ -61,7 +62,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && lint-staged",
-      "pre-push": "if git branch is feature/buildOnlyForDevelopAndMaster; then ng build --prod; fi"
+      "pre-push": "if git-branch-is feature/buildOnlyForDevelopAndMaster; then ng build --prod; fi"
     }
   },
   "lint-staged": {

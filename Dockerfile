@@ -20,7 +20,7 @@ RUN npm install -g @angular/cli@8.1.1
 COPY . /app
 
 # generate build
-RUN ng build
+RUN npm run build
 
 ############
 ### prod ###

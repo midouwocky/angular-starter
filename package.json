@@ -65,7 +65,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "if (git-branch-is feature/pre-push-for-master); then tslint --project tsconfig.json --config tslint.master.json --fix && git add . && git commit -m 'master-verification'; else if (git-branch-is master || git-branch-is -i -r ^release/ ); then ng build --prod; fi; fi"
+      "pre-push": "if (git-branch-is feature/pre-push-for-master); then tslint --project tsconfig.json --config tslint.master.json ; else if (git-branch-is master || git-branch-is -i -r ^release/ ); then ng build --prod; fi; fi"
     }
   },
   "lint-staged": {

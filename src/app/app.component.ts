@@ -28,9 +28,6 @@ export class AppComponent {
     translate.use('en').subscribe(res => {
       this.ready = true;
     });
-    // translate.use('en').subscribe(res => {
-    //   this.ready = true;
-    // });
   }
 
   isAuthenticated(): boolean {

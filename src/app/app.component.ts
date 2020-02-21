@@ -19,7 +19,8 @@ export class AppComponent {
     // add the languages from assets/i18n
     translate.addLangs(['en']);
     translate.setDefaultLang('en');
-    const browserLang = translate.getBrowserLang();
+    translate.getBrowserLang();
+
     // use default browser language
     // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
@@ -27,6 +28,9 @@ export class AppComponent {
     translate.use('en').subscribe(res => {
       this.ready = true;
     });
+    // translate.use('en').subscribe(res => {
+    //   this.ready = true;
+    // });
   }
 
   isAuthenticated(): boolean {

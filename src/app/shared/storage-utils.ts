@@ -1,54 +1,54 @@
 import { User } from './models/user.model';
 
 export class StorageUtils {
-    static setItem(item: any) {
-        localStorage.setItem('item-name', JSON.stringify(item));
-    }
+  static setItem(item: any) {
+    localStorage.setItem('item-name', JSON.stringify(item));
+  }
 
-    static getItem(): any {
-        const itemString = localStorage.getItem('item-name');
-        if (itemString) {
-            return JSON.parse(itemString);
-        } else {
-            return null;
-        }
+  static getItem(): any {
+    const itemString = localStorage.getItem('item-name');
+    if (itemString) {
+      return JSON.parse(itemString);
+    } else {
+      return null;
     }
+  }
 
-    static removeItem() {
-        localStorage.removeItem('item-name');
-    }
+  static removeItem() {
+    localStorage.removeItem('item-name');
+  }
 
-    static setAuthToken(item: any) {
-        localStorage.setItem('access_token', JSON.stringify(item));
-    }
+  static setAuthToken(item: any) {
+    localStorage.setItem('access_token', JSON.stringify(item));
+  }
 
-    static getAuthToken(): any {
-        const itemString = localStorage.getItem('access_token');
-        if (itemString) {
-            return JSON.parse(itemString);
-        } else {
-            return null;
-        }
+  static getAuthToken(): any {
+    const accessTokenString = localStorage.getItem('access_token');
+    if (accessTokenString) {
+      return JSON.parse(accessTokenString);
+    } else {
+      return null;
     }
+  }
 
-    static removeAuthToken() {
-        localStorage.removeItem('access_token');
-    }
+  static removeAuthToken() {
+    localStorage.removeItem('access_token');
+  }
 
-    static setUser(item: User) {
-        localStorage.setItem('user', JSON.stringify(item));
-    }
+  static setUser(item: User) {
+    localStorage.setItem('user', JSON.stringify(item));
+  }
 
-    static getUser(): User {
-        const itemString = localStorage.getItem('user');
-        if (itemString) {
-            return JSON.parse(itemString);
-        } else {
-            return null;
-        }
+  static getUser(): User {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      return JSON.parse(userString);
+    } else {
+      return null;
     }
+  }
 
-    static removeUser() {
-        localStorage.removeItem('user');
-    }
+  static removeUser() {
+    localStorage.removeItem('user');
+  }
 }

@@ -54,20 +54,24 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "protractor": "~5.4.0",
+    "sonar-scanner": "^3.1.0",
+    "sonarqube-scanner": "^2.5.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "tslint-config-prettier": "^1.18.0",
+    "tslint-sonarts": "^1.9.0",
     "typescript": "~3.4.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && lint-staged",
-      "pre-push": "if (git-branch-is master || git-branch-is develop || git-branch-is -i -r ^release/ ); then ng build --prod; fi"
+      "pre-commit": "lint-staged",
+      "pre-push": "if (git-branch-is master || git-branch-is develop || git-branch-is -i -r ^release/ ); then ng build --prod; fi",
+      "pre-merge-commit": "if (git-branch-is master); then tslint --project tsconfig.json **.ts --config tslint.master.json --fix && git add; fi"
     }
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "tslint --fix",
+      "tslint --project tsconfig.json **.ts --fix",
       "git add"
     ]
   }

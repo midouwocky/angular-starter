@@ -67,8 +67,7 @@
       true,
       "allow-declarations",
       "allow-named-functions"
-    ],
-    "no-commented-code": false
+    ]
   },
   "rulesDirectory": ["codelyzer"]
 }

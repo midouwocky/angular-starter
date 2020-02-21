@@ -26,19 +26,21 @@ export class RealTimeService {
     private cookieService: CookieService
   ) {}
 
-  connect(auth?: boolean) {
+  connect(auth = false) {
     if (this.connected) {
       return;
     }
+
+    const XSRF = 'XSRF-TOKEN';
 
     let token = null;
     if (this.authService.isAuthenticated()) {
       token = StorageUtils.getAuthToken();
     }
 
-    let csrfToken = this.cookieService.get('XSRF-TOKEN');
+    let csrfToken = this.cookieService.get(XSRF);
     const headers: any = {};
-    headers['XSRF-TOKEN'] = csrfToken;
+    headers[XSRF] = csrfToken;
     let url = this.socketUrl;
     if (token && auth) {
       headers['Authorization'] = `Bearer ${token}`;
@@ -51,8 +53,8 @@ export class RealTimeService {
       headers,
       function connect(frame) {
         thisClass.connected = true;
-        csrfToken = thisClass.cookieService.get('XSRF-TOKEN');
-        headers['XSRF-TOKEN'] = csrfToken;
+        csrfToken = thisClass.cookieService.get(XSRF);
+        headers[XSRF] = csrfToken;
         console.log('connected to websockets');
 
         thisClass.stompClient.subscribe(
@@ -66,6 +68,13 @@ export class RealTimeService {
                 thisClass.someNotification(wsObject);
                 break;
               }
+              case 'TYPE2': {
+                thisClass.someNotification(wsObject);
+                break;
+              }
+
+              default:
+                break;
             }
           },
           headers,
@@ -95,6 +104,9 @@ export class RealTimeService {
       case 'ACTION': {
         // notify a subject Observable
         this.notifySomething(wsObject.object);
+        break;
+      }
+      case 'ACTION2': {
         break;
       }
     }
